@@ -57,3 +57,4 @@
 #define ERUTASO48  "    l:/\\     l:/ )                  "
 #define ERUTASO49  "        `~U^^^U~/                   "
 #define ERUTASO4DEL "                                    "
+ 
