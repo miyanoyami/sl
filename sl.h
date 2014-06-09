@@ -15,7 +15,7 @@
 #define ERUTASOPATTERNS	 6
 
 #define ERUTASO11  "      _______                       "
-#define ERUTASO12  "    /:::::::::\\    _____            "
+#define ERUTASO12  "    /:::::::::\\   ______            "
 #define ERUTASO13  "( \\/::::::::::::\\/     _)           "
 #define ERUTASO14  " (|::_A__A_:::::|    _)             "
 #define ERUTASO15  "  |:| O   O |:::|  _)               "
@@ -25,9 +25,8 @@
 #define ERUTASO19  "        `~U^^^U~/                   "
 #define ERUTASO1DEL "                                    "
 
-
 #define ERUTASO21  "      _______                       "
-#define ERUTASO22  "    /:::::::::\\    ___              "
+#define ERUTASO22  "    /:::::::::\\   ____              "
 #define ERUTASO23  " (\\/::::::::::::\\/   _)             "
 #define ERUTASO24  "  |::_A__A_:::::|   _)              "
 #define ERUTASO25  "  |:| O   O |:::| _)                "
@@ -38,8 +37,8 @@
 #define ERUTASO2DEL "                                    "
 
 #define ERUTASO31  "      _______                       "
-#define ERUTASO32  "    /:::::::::\\    __               "
-#define ERUTASO33  "  (/::::::::::::\\/  _)              "
+#define ERUTASO32  "    /:::::::::\\   ___               "
+#define ERUTASO33  "  \\/::::::::::::\\/  _)              "
 #define ERUTASO34  "  |::_A__A_:::::| _)                "
 #define ERUTASO35  "  |:| O   O |:::|_)                 "
 #define ERUTASO36  "  l:( \" _ \" |:|:|)                  "
@@ -48,11 +47,9 @@
 #define ERUTASO39  "        `~U^^^U~/                   "
 #define ERUTASO3DEL "                                    "
 
-
-
 #define ERUTASO41  "      _______                       "
-#define ERUTASO42  "    /:::::::::\\    _                "
-#define ERUTASO43  "  |/::::::::::::\\/ _)               "
+#define ERUTASO42  "    /:::::::::\\   __                "
+#define ERUTASO43  "  \\/::::::::::::\\/ _)               "
 #define ERUTASO44  "  |::_A__A_:::::| _)                "
 #define ERUTASO45  "  |:| O   O |:::|_)                 "
 #define ERUTASO46  "  l:( \" _ \" |:|:|)                  "
