@@ -1,25 +1,29 @@
 /*========================================
- *    sl.c: SL version 5.0
- *	Copyright 1993,1998,2013
- *                Toyoda Masashi
- *		  (mtoyoda@acm.org)
- *	Last Modified: 2013/ 5/ 5
+ *    sl.c: SL version 5.02
+ *        Copyright 1993,1998,2014
+ *                  Toyoda Masashi
+ *                  (mtoyoda@acm.org)
+ *        Last Modified: 2014/06/03
  *========================================
  */
 /* sl version 5.1e : mayakatasonize                                          */
 /*                   restore -l -c options.                                  */
 /*                                             by Taichi Sugiyama 2014/ 6/10 */
-/* sl version 5.0e : erutasonize                                             */
+/* sl version 5.02 : Fix compiler warnings.                                  */
+/*                                              by Jeff Schwab    2014/06/03 */
+/* sl version 5.01e: erutasonize                                             */
 /*                   delete -l -c options.                                   */
 /*                                             by Taichi Sugiyama 2014/ 3/26 */
+/* sl version 5.01 : removed cursor and handling of IO                       */
+/*                                              by Chris Seymour  2014/01/03 */
 /* sl version 5.00 : add -c option                                           */
-/*                                              by Toyoda Masashi 2013/ 5/ 5 */
+/*                                              by Toyoda Masashi 2013/05/05 */
 /* sl version 4.00 : add C51, usleep(40000)                                  */
 /*                                              by Toyoda Masashi 2002/12/31 */
 /* sl version 3.03 : add usleep(20000)                                       */
-/*                                              by Toyoda Masashi 1998/ 7/22 */
+/*                                              by Toyoda Masashi 1998/07/22 */
 /* sl version 3.02 : D51 flies! Change options.                              */
-/*                                              by Toyoda Masashi 1993/ 1/19 */
+/*                                              by Toyoda Masashi 1993/01/19 */
 /* sl version 3.01 : Wheel turns smoother                                    */
 /*                                              by Toyoda Masashi 1992/12/25 */
 /* sl version 3.00 : Add d(D51) option                                       */
@@ -27,21 +31,31 @@
 /* sl version 2.02 : Bug fixed.(dust remains in screen)                      */
 /*                                              by Toyoda Masashi 1992/12/17 */
 /* sl version 2.01 : Smoke run and disappear.                                */
-/*                   Change '-a' to accident option.			     */
+/*                   Change '-a' to accident option.                         */
 /*                                              by Toyoda Masashi 1992/12/16 */
 /* sl version 2.00 : Add a(all),l(long),F(Fly!) options.                     */
-/* 						by Toyoda Masashi 1992/12/15 */
+/*                                              by Toyoda Masashi 1992/12/15 */
 /* sl version 1.02 : Add turning wheel.                                      */
-/*					        by Toyoda Masashi 1992/12/14 */
+/*                                              by Toyoda Masashi 1992/12/14 */
 /* sl version 1.01 : Add more complex smoke.                                 */
 /*                                              by Toyoda Masashi 1992/12/14 */
 /* sl version 1.00 : SL runs vomitting out smoke.                            */
-/*						by Toyoda Masashi 1992/12/11 */
+/*                                              by Toyoda Masashi 1992/12/11 */
 
 #include <curses.h>
 #include <signal.h>
 #include <unistd.h>
 #include "sl.h"
+
+void add_kininarimasu(int y, int x);
+void add_fukuchan(int y, int x);
+void add_lolinarimasu(int y, int x);
+void add_smoke(int y, int x);
+int add_erutaso(int x);
+int add_mayakataso(int x);
+int add_lolitaso(int x);
+void option(char *str);
+int my_mvaddstr(int y, int x, char *str);
 
 int ACCIDENT  = 0;
 int FLY       = 0;
@@ -51,9 +65,9 @@ int LOLI    = 0;
 int my_mvaddstr(int y, int x, char *str)
 {
     for ( ; x < 0; ++x, ++str)
-	if (*str == '\0')  return ERR;
+        if (*str == '\0')  return ERR;
     for ( ; *str != '\0'; ++str, ++x)
-	if (mvaddch(y, x, *str) == ERR)  return ERR;
+        if (mvaddch(y, x, *str) == ERR)  return ERR;
     return OK;
 }
 
@@ -65,7 +79,7 @@ void option(char *str)
 		switch (*str++) {
 		    case 'a': ACCIDENT = 1; break;
 		    case 'F': FLY      = 1; break;
-		    case 'l': LOLI   = 1; break;
+		    case 'l': LOLI     = 1; break;
 		    case 'c': MAYAKA   = 1; break;
 		    default:                break;
 		}
@@ -77,9 +91,9 @@ int main(int argc, char *argv[])
     int x, i;
 
     for (i = 1; i < argc; ++i) {
-	if (*argv[i] == '-') {
-	    option(argv[i] + 1);
-	}
+        if (*argv[i] == '-') {
+            option(argv[i] + 1);
+        }
     }
     initscr();
     signal(SIGINT, SIG_IGN);
@@ -124,10 +138,10 @@ int add_erutaso(int x)
     y = LINES / 2 - 3;
 
     if (FLY == 1) {
-	y = (x / 6) + LINES - (COLS / 6) - ERUTASOHIGHT;
+		y = (x / 6) + LINES - (COLS / 6) - ERUTASOHIGHT;
     }
     for (i = 0; i <= ERUTASOHIGHT; ++i) {
-	my_mvaddstr(y + i, x, erutaso[(ERUTASOLENGTH + x) / 3 % ERUTASOPATTERNS][i]);
+		my_mvaddstr(y + i, x, erutaso[(ERUTASOLENGTH + x) / 3 % ERUTASOPATTERNS][i]);
     }
     if (ACCIDENT == 1) {
 		add_kininarimasu(y , x + 16);
@@ -153,10 +167,10 @@ int add_mayakataso(int x)
     y = LINES / 2 - 3;
 
     if (FLY == 1) {
-	y = (x / 6) + LINES - (COLS / 6) - MAYAKATASOHIGHT;
+		y = (x / 6) + LINES - (COLS / 6) - MAYAKATASOHIGHT;
     }
     for (i = 0; i <= MAYAKATASOHIGHT; ++i) {
-	my_mvaddstr(y + i, x, mayakataso[(MAYAKATASOLENGTH + x) / 3 % MAYAKATASOPATTERNS][i]);
+		my_mvaddstr(y + i, x, mayakataso[(MAYAKATASOLENGTH + x) / 3 % MAYAKATASOPATTERNS][i]);
     }
     if (ACCIDENT == 1) {
 		add_fukuchan(y , x + 16);
@@ -182,10 +196,10 @@ int add_lolitaso(int x)
     y = LINES / 2 - 3;
 
     if (FLY == 1) {
-	y = (x / 6) + LINES - (COLS / 6) - LOLITASOHIGHT;
+		y = (x / 6) + LINES - (COLS / 6) - LOLITASOHIGHT;
     }
     for (i = 0; i <= LOLITASOHIGHT; ++i) {
-	my_mvaddstr(y + i, x, LOLITASO[(LOLITASOLENGTH + x) / 3 % LOLITASOPATTERNS][i]);
+		my_mvaddstr(y + i, x, LOLITASO[(LOLITASOLENGTH + x) / 3 % LOLITASOPATTERNS][i]);
     }
     if (ACCIDENT == 1) {
 		add_lolinarimasu(y , x + 13);
@@ -194,64 +208,64 @@ int add_lolitaso(int x)
     return OK;
 }
 
-int add_kininarimasu(int y, int x)
+void add_kininarimasu(int y, int x)
 {
 	static char *man[2] = {"", "< KININARIMASU! "};
 	my_mvaddstr(y , x, man[(ERUTASOLENGTH + x) / 12 % 2]);
 }
 
-int add_fukuchan(int y, int x)
+void add_fukuchan(int y, int x)
 {
 	static char *man[2] = {"", "< FUKUCHAN! "};
 	my_mvaddstr(y , x, man[(MAYAKATASOLENGTH + x) / 12 % 2]);
 }
 
-int add_lolinarimasu(int y, int x)
+void add_lolinarimasu(int y, int x)
 {
 	static char *man[2] = {"", "< kininarimasu! "};
 	my_mvaddstr(y , x, man[(LOLITASOLENGTH + x) / 12 % 2]);
 }
 
 
-int add_smoke(int y, int x)
-#define SMOKEPTNS	16
+void add_smoke(int y, int x)
+#define SMOKEPTNS        16
 {
     static struct smokes {
-	int y, x;
-	int ptrn, kind;
+        int y, x;
+        int ptrn, kind;
     } S[1000];
     static int sum = 0;
     static char *Smoke[2][SMOKEPTNS]
-	= {{"(   )", "(    )", "(    )", "(   )", "(  )",
-	    "(  )" , "( )"   , "( )"   , "()"   , "()"  ,
-	    "O"    , "O"     , "O"     , "O"    , "O"   ,
-	    " "                                          },
-	   {"(@@@)", "(@@@@)", "(@@@@)", "(@@@)", "(@@)",
-	    "(@@)" , "(@)"   , "(@)"   , "@@"   , "@@"  ,
-	    "@"    , "@"     , "@"     , "@"    , "@"   ,
-	    " "                                          }};
+        = {{"(   )", "(    )", "(    )", "(   )", "(  )",
+            "(  )" , "( )"   , "( )"   , "()"   , "()"  ,
+            "O"    , "O"     , "O"     , "O"    , "O"   ,
+            " "                                          },
+           {"(@@@)", "(@@@@)", "(@@@@)", "(@@@)", "(@@)",
+            "(@@)" , "(@)"   , "(@)"   , "@@"   , "@@"  ,
+            "@"    , "@"     , "@"     , "@"    , "@"   ,
+            " "                                          }};
     static char *Eraser[SMOKEPTNS]
-	=  {"     ", "      ", "      ", "     ", "    ",
-	    "    " , "   "   , "   "   , "  "   , "  "  ,
-	    " "    , " "     , " "     , " "    , " "   ,
-	    " "                                          };
+        =  {"     ", "      ", "      ", "     ", "    ",
+            "    " , "   "   , "   "   , "  "   , "  "  ,
+            " "    , " "     , " "     , " "    , " "   ,
+            " "                                          };
     static int dy[SMOKEPTNS] = { 2,  1, 1, 1, 0, 0, 0, 0, 0, 0,
-				 0,  0, 0, 0, 0, 0             };
+                                 0,  0, 0, 0, 0, 0             };
     static int dx[SMOKEPTNS] = {-2, -1, 0, 1, 1, 1, 1, 1, 2, 2,
-				 2,  2, 2, 3, 3, 3             };
+                                 2,  2, 2, 3, 3, 3             };
     int i;
 
     if (x % 4 == 0) {
-	for (i = 0; i < sum; ++i) {
-	    my_mvaddstr(S[i].y, S[i].x, Eraser[S[i].ptrn]);
-	    S[i].y    -= dy[S[i].ptrn];
-	    S[i].x    += dx[S[i].ptrn];
-	    S[i].ptrn += (S[i].ptrn < SMOKEPTNS - 1) ? 1 : 0;
-	    my_mvaddstr(S[i].y, S[i].x, Smoke[S[i].kind][S[i].ptrn]);
-	}
-	my_mvaddstr(y, x, Smoke[sum % 2][0]);
-	S[sum].y = y;    S[sum].x = x;
-	S[sum].ptrn = 0; S[sum].kind = sum % 2;
-	sum ++;
+        for (i = 0; i < sum; ++i) {
+            my_mvaddstr(S[i].y, S[i].x, Eraser[S[i].ptrn]);
+            S[i].y    -= dy[S[i].ptrn];
+            S[i].x    += dx[S[i].ptrn];
+            S[i].ptrn += (S[i].ptrn < SMOKEPTNS - 1) ? 1 : 0;
+            my_mvaddstr(S[i].y, S[i].x, Smoke[S[i].kind][S[i].ptrn]);
+        }
+        my_mvaddstr(y, x, Smoke[sum % 2][0]);
+        S[sum].y = y;    S[sum].x = x;
+        S[sum].ptrn = 0; S[sum].kind = sum % 2;
+        sum ++;
     }
 }

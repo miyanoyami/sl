@@ -1,9 +1,9 @@
 /*========================================
- *    sl.h: SL version 5.0
- *	Copyright 1993,2002,2013
- *                Toyoda Masashi 
+ *    sl.h: SL version 5.02
+ *	Copyright 1993,2002,2014
+ *                Toyoda Masashi
  *		  (mtoyoda@acm.org)
- *	Last Modified: 2013/ 5/ 5
+ *	Last Modified: 2014/06/03
  *========================================
  * 
  * Erutasonized by Taichi Sugiyama: 2013/ 3/26
