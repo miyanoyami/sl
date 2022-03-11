@@ -11,6 +11,6 @@
 CC=gcc
 CFLAGS=-O
 
-erutaso: sl.c sl.h
-	$(CC) $(CFLAGS) -o erutaso sl.c -lncurses
+shacho: sl.c sl.h
+	$(CC) $(CFLAGS) -o shacho sl.c -lncurses
 

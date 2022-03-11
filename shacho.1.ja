@@ -2,35 +2,27 @@
 .\"  Copyright 1993,2014 Toyoda Masashi.
 .\"		         (mtoyoda@acm.org)
 .\"
-.\"  (Erutasonized by Taichi Sugiyama: 2013/ 3/26)
+.\"  (Shachonized by Miyano Yami: 2022/ 3/11)
 .\"
-.\"	@(#)erutaso.1
+.\"	@(#)shadcho.1
 .\"
-.TH ERUTASO 1 "March 31, 2014"
+.TH SHACHO 1 "March 11, 2022"
 .SH 名称
-erutaso \- キータイプを矯正します。
+shacho \- キータイプを矯正します。
 .SH 形式
-.B erutaso
+.B shacho 
 [
 .B \-alF
 ]
 .SH 解説
-.B erutaso
+.B shacho 
 は、高度に発展した、キータイプ矯正を目的とするアニメーションプログラムです。
 .PP
 次のようなオプションがあります。
 .TP
 .B \-a
-なにかアクシデントがあったようですね。えるたそが「気になります！」と言っています。
+挨拶がしたいようですね。社長が「社長だよ！」と言っています。
 .TP
-.B \-l
-小さくなります。
-.TP
-.B \-F
-飛びます。
-.TP
-.B \-c
-伊原摩耶花になります。（c…？）
 .PP
 .SH 関連事項
 .BR ls (1)
